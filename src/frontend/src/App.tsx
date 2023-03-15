@@ -1,6 +1,7 @@
 import { Center, Loader } from "@mantine/core";
 import queryString from "query-string";
 import { Suspense } from "react";
+import { ErrorBoundary } from "./ErrorBoundary";
 import { WhoIsWhere } from "./WhoIsWhere";
 
 function App() {
@@ -15,19 +16,21 @@ function App() {
   }
 
   return (
-    <Suspense
-      fallback={
-        <Center maw={400} h={200} mx="auto">
-          <Loader />
-        </Center>
-      }
-    >
-      <WhoIsWhere
-        teamIdentifier={teamIdentifier}
-        teamName={teamName}
-        teamMembers={who}
-      />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense
+        fallback={
+          <Center maw={400} h={200} mx="auto">
+            <Loader />
+          </Center>
+        }
+      >
+        <WhoIsWhere
+          teamIdentifier={teamIdentifier}
+          teamName={teamName}
+          teamMembers={who}
+        />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
