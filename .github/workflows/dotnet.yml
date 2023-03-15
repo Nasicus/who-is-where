@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  app-name: "who-is-where-api"
+  rg-name: "who-is-where"
+
 jobs:
   build:
 
@@ -29,3 +33,42 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       working-directory: ./src/backend
+    - name: Publish
+      run: dotnet publish WhoIsWhere/WhoIsWhere.csproj -c Release -o api
+      working-directory: ./src/backend
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: api
+        path: WhoIsWhere/api/**
+        if-no-files-found: error
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: azure
+      url: ${{ steps.deploywebapp.outputs.webapp-url }}
+
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: api
+        path: api
+
+    - name: Login via Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_API_CREDENTIALS }}
+
+    - name: Deploy web app
+      id: deploywebapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.app-name }}
+        package: api
+
+    - name: az cli logout
+      run: az logout
