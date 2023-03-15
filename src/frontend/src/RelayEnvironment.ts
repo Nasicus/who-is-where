@@ -1,16 +1,15 @@
-import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-  FetchFunction,
-  Observable,
-  RequestParameters,
-  Variables,
-  CacheConfig,
-} from "relay-runtime";
 import { createClient } from "graphql-ws";
-import queryString from "query-string";
+import {
+  CacheConfig,
+  Environment,
+  FetchFunction,
+  Network,
+  Observable,
+  RecordSource,
+  RequestParameters,
+  Store,
+  Variables,
+} from "relay-runtime";
 
 const HTTP_ENDPOINT =
   process.env.NODE_ENV !== "production"
