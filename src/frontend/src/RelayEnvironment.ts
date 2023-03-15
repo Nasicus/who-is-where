@@ -14,24 +14,20 @@ import queryString from "query-string";
 
 const HTTP_ENDPOINT =
   process.env.NODE_ENV !== "production"
-    ? "https://localhost:44301/api/graphql"
+    ? "https://localhost:44301/graphql"
     : "https://who-is-where-api.azurewebsites.net/graphql";
 const WSS_URL =
   process.env.NODE_ENV !== "production"
-    ? "wss://localhost:44301/api/graphql"
+    ? "wss://localhost:44301/graphql"
     : "wss://who-is-where-api.azurewebsites.net/graphql";
 
-    const password = queryString.parse(window.location.search)?.password;
-
 const fetchFn: FetchFunction = async (request, variables) => {
-
-  const resp = await fetch(`${HTTP_ENDPOINT}?${queryString.stringify({password})}`, {
+  const resp = await fetch(HTTP_ENDPOINT, {
     method: "POST",
     headers: {
       Accept:
         "application/graphql-response+json; charset=utf-8, application/json; charset=utf-8",
       "Content-Type": "application/json",
-      "x-password": Array.isArray(password) ? password[0] : password,
     },
     body: JSON.stringify({
       query: request.text, // <-- The GraphQL document composed by Relay
@@ -42,9 +38,8 @@ const fetchFn: FetchFunction = async (request, variables) => {
   return await resp.json();
 };
 
-
 const wsClient = createClient({
-  url: `${WSS_URL}?${queryString.stringify({password})}`,
+  url: WSS_URL,
 });
 
 const subscribe = (
