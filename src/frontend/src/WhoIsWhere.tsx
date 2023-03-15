@@ -50,6 +50,9 @@ const useStyles = createStyles((theme) => ({
   cell: {
     width: "16.6666666667%",
   },
+  headerCell: {
+    wordBreak: "break-all",
+  },
 }));
 
 export const WhoIsWhere: FC<{
@@ -60,7 +63,7 @@ export const WhoIsWhere: FC<{
   const data = useLazyLoadQuery<WhoIsWhereQueryType>(WhoIsWhereQuery, {
     teamIdentifier,
   });
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
 
   if (!data) {
     return null;
@@ -80,12 +83,12 @@ export const WhoIsWhere: FC<{
       <Table mt="xl" striped className={classes.table}>
         <thead>
           <tr>
-            <th className={classes.cell}></th>
-            <th className={classes.cell}>Mäntig</th>
-            <th className={classes.cell}>Zischtig</th>
-            <th className={classes.cell}>Mittwuch</th>
-            <th className={classes.cell}>Dunnschtig</th>
-            <th className={classes.cell}>Fritig</th>
+            <th className={cx(classes.cell, classes.headerCell)}></th>
+            <th className={cx(classes.cell, classes.headerCell)}>Mäntig</th>
+            <th className={cx(classes.cell, classes.headerCell)}>Zischtig</th>
+            <th className={cx(classes.cell, classes.headerCell)}>Mittwuch</th>
+            <th className={cx(classes.cell, classes.headerCell)}>Dunnschtig</th>
+            <th className={cx(classes.cell, classes.headerCell)}>Fritig</th>
           </tr>
         </thead>
         <tbody>
