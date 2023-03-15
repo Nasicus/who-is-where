@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="HotChocolate.ApolloFederation" />
         <PackageReference Include="HotChocolate.AspNetCore" />
         <PackageReference Include="MongoDB.Driver" />
     </ItemGroup>
