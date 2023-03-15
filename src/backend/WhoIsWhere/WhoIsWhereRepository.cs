@@ -21,9 +21,9 @@ public class WhoIsWhereRepository
             };
 
         var mongoClient = new MongoClient(settings);
-        var mongoDatabase = mongoClient.GetDatabase("who-is-where");
+        var mongoDatabase = mongoClient.GetDatabase(dbSettings.Value.DbName);
 
-        whoIsWhereCollection = mongoDatabase.GetCollection<WhoIsWhereDb>("WhoIsWhere");
+        whoIsWhereCollection = mongoDatabase.GetCollection<WhoIsWhereDb>(dbSettings.Value.CollectionName);
     }
 
     public async Task<IReadOnlyList<WhoIsWhere>> GetWhoIsWhere(
