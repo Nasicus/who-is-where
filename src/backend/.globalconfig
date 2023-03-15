@@ -1,0 +1,2 @@
+# disabled because of https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3527
+dotnet_diagnostic.SA1206.severity = none

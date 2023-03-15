@@ -1,0 +1,66 @@
+schema {
+  query: WhoIsWhereQuery
+  mutation: WhoIsWhereMutation
+  subscription: WhoIsWhereSubscription
+}
+
+type WhoIsWhereQuery {
+  whoIsWhere(teamIdentifier: String!): WhoIsWhereQueryResult!
+}
+
+type WhoIsWhereMutation {
+  updateWhoIsWhere(
+    teamIdentifier: String!
+    day: String!
+    who: String!
+    where: String!
+    id: String
+    comment: String
+  ): DayInfo!
+}
+
+type WhoIsWhereSubscription {
+  whoIsWhereUpdated(
+    teamIdentifier: String!
+    who: String!
+    day: String!
+  ): WhoIsWhereSubscriptionUpdate!
+}
+
+type WhoIsWhereSubscriptionUpdate {
+  memberName: String!
+  day: String!
+  update: DayInfo!
+}
+
+type DayInfo {
+  id: String!
+  where: String!
+  comment: String
+}
+
+type WhoIsWhereQueryResult {
+  weekInfo: WeekInfo!
+  teamIdentifier: String!
+  whoIsWhere: [WhoIsWhere!]!
+}
+
+type WhoIsWhere {
+  memberName: String!
+  monday: DayInfo
+  tuesday: DayInfo
+  wednesday: DayInfo
+  thursday: DayInfo
+  friday: DayInfo
+}
+
+type WeekInfo {
+  isCurrentWeek: Boolean!
+  monday: Date!
+  friday: Date!
+}
+
+"""
+The `Date` scalar represents an ISO-8601 compliant date type.
+"""
+scalar Date
