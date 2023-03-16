@@ -1,6 +1,6 @@
-import { Center, Loader } from "@mantine/core";
 import queryString from "query-string";
 import { Suspense } from "react";
+import { AppLoader } from "./AppLoader";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { WhoIsWhere } from "./WhoIsWhere";
 
@@ -17,13 +17,7 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <Suspense
-        fallback={
-          <Center maw={400} h={200} mx="auto">
-            <Loader />
-          </Center>
-        }
-      >
+      <Suspense fallback={<AppLoader />}>
         <WhoIsWhere
           teamIdentifier={teamIdentifier}
           teamName={teamName}
